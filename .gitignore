@@ -1,0 +1,17 @@
+# Autosave files (Windows + Linux)
+*.asv
+*.m~
+
+# Generated docs
+*.html
+
+# Mex Files
+*.mex*
+
+# Apps and Toolboxes
+*.mlappinstall
+*.mltbx
+
+# Simulink stuff
+slprj/
+*.autosave
