@@ -26,7 +26,7 @@
 % ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 % POSSIBILITY OF SUCH DAMAGE.
 
-classdef AccessWrapper < handle
+classdef AccessProxy < handle
     properties (Access=private)
         Setter function_handle
         Getter function_handle
@@ -35,7 +35,7 @@ classdef AccessWrapper < handle
         Value
     end
     methods
-        function this = AccessWrapper(Setter, Getter)
+        function this = AccessProxy(Setter, Getter)
             arguments
                 Setter function_handle
                 Getter function_handle
@@ -58,6 +58,11 @@ classdef AccessWrapper < handle
 
         function V = get(this)
             V = this.Value;
+        end
+
+        function disp(this)
+            disp("This is a proxy object. Access value by indexing the Value Property of this proxy.");
+            disp(this.Value);
         end
     end
 end

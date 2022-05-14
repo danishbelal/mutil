@@ -38,12 +38,18 @@ classdef ModelWorkspace
             this.Workspace = get_param(Model, "ModelWorkspace");
         end
 
-        function Entry = ByName(this, EntryName)
+        function Entry = ByName(this, EntryName, EnableProxy)
             arguments
                 this
                 EntryName (1,1) string
+                EnableProxy (1,1) logical = true
             end
             Entry = this.Workspace.getVariable(EntryName);
+            if EnableProxy && class(Entry) == "Simulink.Parameter"
+                Setter = @(v) setfield(Entry, "Value", v);
+                Getter = @()  Entry.Value;
+                Entry = mutil.AccessProxy(Setter, Getter);
+            end
         end
 
         function Result = evalin(this, Expression)

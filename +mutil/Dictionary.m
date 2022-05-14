@@ -45,22 +45,24 @@ methods
         AllEntries = this.Section.find();
     end
 
-    function Entry = ByName(this, EntryName)
+    function Entry = ByName(this, EntryName, EnableProxy)
         arguments
             this
             EntryName (1,1) string
+            EnableProxy (1,1) logical = true
         end
         Entry = this.Entries();
-        Entry = util.Filter(Entry, @(e) e.Name == EntryName);
+        Entry = mutil.Filter(Entry, @(e) e.Name == EntryName);
         
-        if class(Entry.getValue()) == "Simulink.Parameter"
+        if EnableProxy && class(Entry.getValue()) == "Simulink.Parameter"
             Setter = @(v) Entry.setValue(Simulink.Parameter(v));
             Getter = @()  Entry.getValue().Value;
+            Entry = mutil.AccessProxy(Setter, Getter);
         else
             Setter = @(v) Entry.setValue(v);
             Getter = @()  Entry.getValue();
+            Entry = mutil.AccessProxy(Setter, Getter);
         end
-        Entry = util.AccessWrapper(Setter, Getter);
     end
 
     function Entries = ByType(this, Type)
@@ -69,7 +71,7 @@ methods
             Type (1,1) string
         end
         Entries = this.Entries();
-        Entries = util.Filter(Entries, @(e) class(e.getValue()) == Type);
+        Entries = mutil.Filter(Entries, @(e) class(e.getValue()) == Type);
     end
 
     function Result = evalin(this, Expression)
