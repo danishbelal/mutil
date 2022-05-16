@@ -48,7 +48,7 @@ classdef ModelWorkspace
             if EnableProxy && class(Entry) == "Simulink.Parameter"
                 Setter = @(v) setfield(Entry, "Value", v);
                 Getter = @()  Entry.Value;
-                Entry = mutil.AccessProxy(Setter, Getter);
+                Entry = mutil.internal.AccessProxy(Setter, Getter);
             end
         end
 

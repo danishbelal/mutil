@@ -57,11 +57,11 @@ methods
         if EnableProxy && class(Entry.getValue()) == "Simulink.Parameter"
             Setter = @(v) Entry.setValue(Simulink.Parameter(v));
             Getter = @()  Entry.getValue().Value;
-            Entry = mutil.AccessProxy(Setter, Getter);
+            Entry = mutil.internal.AccessProxy(Setter, Getter);
         else
             Setter = @(v) Entry.setValue(v);
             Getter = @()  Entry.getValue();
-            Entry = mutil.AccessProxy(Setter, Getter);
+            Entry = mutil.internal.AccessProxy(Setter, Getter);
         end
     end
 
